@@ -42,6 +42,9 @@ public class RegistrationService : IRegistrationService
     {
         var query = await _repository.GetByIdAsync(id);
 
+        if (query == null)
+            return null;
+
         return new RegistrationDto
         {
             Id = query.Id,

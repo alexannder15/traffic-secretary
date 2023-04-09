@@ -20,8 +20,15 @@ public class InfringementController : ControllerBase
         Ok(await _infringementService.GetAllAsync());
 
     [HttpGet("{id}")]
-    public async Task<IActionResult> GetByIdAsync(int id) =>
-        Ok(await _infringementService.GetByIdAsync(id));
+    public async Task<IActionResult> GetByIdAsync(int id)
+    {
+        var result = await _infringementService.GetByIdAsync(id);
+
+        if (result == null)
+            return NotFound($"infringement with id: {id} not found");
+            
+        return Ok(result);
+    }
 
     [HttpPost]
     public async Task<IActionResult> CreateAsync(CreateInfringementDto createInfringementDto) =>

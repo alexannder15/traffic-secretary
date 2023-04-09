@@ -45,6 +45,9 @@ public class VehicleService : IVehicleService
     {
         var query = await _repository.GetByIdAsync(id);
 
+        if (query == null)
+            return null;
+
         return new VehicleDto
         {
             Id = query.Id,

@@ -52,6 +52,9 @@ public class OwnerService : IOwnerService
     {
         var query = await _repository.GetByIdAsync(id);
 
+        if (query == null)
+            return null;
+
         return new OwnerDto
         {
             Id = query.Id,

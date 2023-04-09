@@ -20,8 +20,15 @@ public class OwnerController : ControllerBase
         Ok(await _ownerService.GetAllAsync());
 
     [HttpGet("{id}")]
-    public async Task<IActionResult> GetByIdAsync(int id) =>
-        Ok(await _ownerService.GetByIdAsync(id));
+    public async Task<IActionResult> GetByIdAsync(int id)
+    {
+        var result = await _ownerService.GetByIdAsync(id);
+
+        if (result == null)
+            return NotFound($"owner with id: {id} not found");
+
+        return Ok(result);
+    }
 
     [HttpPost]
     public async Task<IActionResult> CreateAsync(CreateOwnerDto createVehicleDto) =>

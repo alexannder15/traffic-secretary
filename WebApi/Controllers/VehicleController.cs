@@ -20,8 +20,15 @@ public class VehicleController : ControllerBase
         Ok(await _vehicleService.GetAllAsync());
 
     [HttpGet("{id}")]
-    public async Task<IActionResult> GetByIdAsync(int id) =>
-        Ok(await _vehicleService.GetByIdAsync(id));
+    public async Task<IActionResult> GetByIdAsync(int id)
+    {
+        var result = await _vehicleService.GetByIdAsync(id);
+
+        if (result == null)
+            return NotFound($"vehicle with id: {id} not found");
+
+        return Ok(result);
+    }
 
     [HttpPost]
     public async Task<IActionResult> CreateAsync(CreateVehicleDto createVehicleDto) =>

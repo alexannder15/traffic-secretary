@@ -42,6 +42,9 @@ public class InfringementService : IInfringementService
             .Include(x => x.Vehicle)
             .FirstOrDefaultAsync(x => x.Id == id);
 
+        if (query == null)
+            return null;
+
         return new InfringementDto
         {
             Id = query.Id,

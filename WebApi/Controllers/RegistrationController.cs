@@ -20,8 +20,15 @@ public class RegistrationController : ControllerBase
         Ok(await _registrationService.GetAllAsync());
 
     [HttpGet("{id}")]
-    public async Task<IActionResult> GetByIdAsync(int id) =>
-        Ok(await _registrationService.GetByIdAsync(id));
+    public async Task<IActionResult> GetByIdAsync(int id)
+    {
+        var result = await _registrationService.GetByIdAsync(id);
+
+        if (result == null)
+            return NotFound($"registration with id: {id} not found");
+
+        return Ok(result);
+    }
 
     [HttpPost]
     public async Task<IActionResult> CreateAsync(CreateRegistrationDto createRegistrationDto) =>
